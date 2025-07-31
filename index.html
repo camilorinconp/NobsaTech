@@ -8,167 +8,256 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Calm Harmony -->
-    <!-- Application Structure Plan: The SPA is structured into four logical, scrollable sections for intuitive exploration: 1) A 'Hero' section summarizing the vision. 2) A 'Diagnosis' section using interactive cards to present the current digital state. 3) A core 'Roadmap' section with clickable tabs for each phase (Short, Medium, Long Term) on desktop, transforming into an accordion on mobile, dynamically displaying objectives, technologies, and use cases. This is the main interactive hub. 4) An 'Impact' section with a dynamic bar chart visualizing the projected social, economic, and administrative benefits. This structure transforms the linear report into a user-driven dashboard, allowing stakeholders to grasp the big picture and then drill down into specific phases, making the complex proposal digestible and engaging. -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony with Modern Accents -->
+    <!-- Application Structure Plan: The SPA is structured into four logical, scrollable sections for intuitive exploration: 1) A 'Hero' section summarizing the vision with a dynamic background. 2) A 'Diagnosis' section using interactive, elevated cards to present the current digital state. 3) A core 'Roadmap' section with clickable tabs for each phase (Short, Medium, Long Term) on desktop, transforming into an accordion with sleek transitions on mobile, dynamically displaying objectives, technologies, and use cases. This is the main interactive hub. 4) An 'Impact' section with a dynamic bar chart visualizing the projected social, economic, and administrative benefits, styled for clarity. This structure transforms the linear report into a user-driven dashboard, allowing stakeholders to grasp the big picture and then drill down into specific phases, making the complex proposal digestible and engaging with a modern aesthetic. -->
     <!-- Visualization & Content Choices: 
-        - Report Info: Executive Summary -> Goal: Inform/Inspire -> Viz: Hero section with key stats -> Interaction: None -> Justification: Strong initial impact. -> Library/Method: HTML/Tailwind.
-        - Report Info: Diagnosis Data (Presence, Tech, Connectivity) -> Goal: Organize/Inform -> Viz: Icon-driven cards -> Interaction: Hover effects -> Justification: Quickly conveys current state without overwhelming detail. -> Library/Method: HTML/Tailwind.
-        - Report Info: Phased Implementation Plan -> Goal: Organize/Compare -> Viz: Interactive Tabbed Timeline (desktop) / Accordion (mobile) -> Interaction: Click to reveal phase details -> Justification: Tabs are efficient for desktop, while an accordion is superior for mobile to prevent overflow and provide a clear vertical flow. -> Library/Method: HTML/Tailwind/JS.
-        - Report Info: Impact Indicators (% changes) -> Goal: Compare/Inform -> Viz: Grouped Bar Chart -> Interaction: Tooltips on hover -> Justification: A bar chart is superior to multiple pie charts for comparing different metrics across categories (Social, Economic, Admin). -> Library/Method: Chart.js/Canvas.
-        - Report Info: Value Proposition -> Goal: Inform -> Viz: Multi-column list with icons -> Interaction: None -> Justification: Clear, scannable summary of key benefits. -> Library/Method: HTML/Tailwind.
+        - Report Info: Executive Summary -> Goal: Inform/Inspire -> Viz: Hero section with key stats, animated gradient text, and subtle background pattern -> Interaction: None -> Justification: Creates a strong, modern first impression. -> Library/Method: HTML/Tailwind/CSS.
+        - Report Info: Diagnosis Data (Presence, Tech, Connectivity) -> Goal: Organize/Inform -> Viz: Elevated, icon-driven cards with enhanced hover effects -> Interaction: Hover effects -> Justification: Visually appealing and quickly conveys current state without overwhelming detail. -> Library/Method: HTML/Tailwind.
+        - Report Info: Phased Implementation Plan -> Goal: Organize/Compare -> Viz: Interactive Tabbed Timeline (desktop) with smooth transitions / Accordion (mobile) with animated expand/collapse -> Interaction: Click to reveal phase details -> Justification: Tabs are efficient for desktop, while an accordion is superior for mobile to prevent overflow and provide a clear vertical flow, both with modern animations. -> Library/Method: HTML/Tailwind/JS.
+        - Report Info: Impact Indicators (% changes) -> Goal: Compare/Inform -> Viz: Grouped Bar Chart with refined colors and clear labels -> Interaction: Tooltips on hover -> Justification: A bar chart is superior to multiple pie charts for comparing different metrics across categories (Social, Economic, Admin), presented cleanly. -> Library/Method: Chart.js/Canvas.
+        - Report Info: Value Proposition -> Goal: Inform -> Viz: Multi-column list with vibrant icons and clear descriptions -> Interaction: None -> Justification: Clear, scannable summary of key benefits, visually enhanced. -> Library/Method: HTML/Tailwind.
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #F8F9FA;
-            color: #212529;
+            background-color: #F0F4F8; /* Light blue-gray background */
+            color: #2C3E50; /* Darker text for contrast */
+            line-height: 1.6;
+        }
+        .header-shadow {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+        .section-title {
+            font-size: 2.5rem; /* Larger title */
+            font-weight: 900; /* Bolder */
+            color: #2C3E50;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.025em; /* Tighter spacing */
+        }
+        .section-subtitle {
+            font-size: 1.25rem; /* Slightly larger subtitle */
+            color: #607D8B; /* Softer gray */
+            text-align: center;
+            max-width: 900px; /* Wider for better readability */
+            margin: 0 auto 4rem auto; /* More spacing below */
+        }
+        .card {
+            background-color: #FFFFFF;
+            border-radius: 1rem; /* More rounded corners */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), 0 4px 10px rgba(0, 0, 0, 0.04); /* Deeper shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle border */
+        }
+        .card:hover {
+            transform: translateY(-8px); /* More pronounced lift */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12), 0 6px 15px rgba(0, 0, 0, 0.06); /* Even deeper shadow on hover */
+        }
+        
+        /* Hero section specific styles */
+        .hero-bg {
+            background: linear-gradient(135deg, #4A90E2 0%, #6FCF97 100%); /* Vibrant gradient */
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='M0 60V0h60v60H0zm5-10V10h50v50H5zm10-10V20h40v40H15zm10-10V30h30v30H25zm10-10V40h20v20H35zm10-10V50h10v10H45z'/%3E%3C/g%3E%3C/svg%3E"); /* Subtle geometric pattern */
+            opacity: 0.1;
+            z-index: 0;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .gradient-text {
+            background-image: linear-gradient(45deg, #0D6EFD, #28A745); /* Blue to Green gradient */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Buttons */
+        .primary-button {
+            background-color: #0D6EFD;
+            color: white;
+            padding: 0.8rem 2.5rem;
+            border-radius: 9999px; /* Fully rounded */
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+        }
+        .primary-button:hover {
+            background-color: #0B5ED7;
+            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Tabs (Desktop) */
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            border-bottom: 3px solid transparent; /* Thicker border */
+            font-weight: 600;
+            color: #607D8B;
+            transition: all 0.3s ease;
+            border-radius: 0.5rem 0.5rem 0 0; /* Rounded top corners */
+        }
+        .tab-btn:hover {
+            color: #0D6EFD;
+            border-color: #A7D9FF; /* Lighter blue on hover */
         }
         .tab-active {
             border-color: #0D6EFD;
             color: #0D6EFD;
-            font-weight: 600;
+            background-color: #EBF2F7; /* Subtle background for active tab */
+            font-weight: 700;
         }
-        .tab-inactive {
-            border-color: transparent;
-            color: #6C757D;
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 400px;
-            max-height: 50vh;
-        }
-        .section-title {
-            font-size: 2.25rem;
-            font-weight: 800;
-            color: #343A40;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-        .section-subtitle {
-            font-size: 1.125rem;
-            color: #6C757D;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 3rem auto;
-        }
-        .card {
+        .tab-content-wrapper {
             background-color: #FFFFFF;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 2.5rem; /* More padding */
         }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
-        }
+
+        /* Accordion (Mobile) */
         .accordion-header {
-            background-color: #E2E8F0;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-bottom: 0.5rem;
+            background-color: #EBF2F7; /* Lighter background for header */
+            padding: 1.2rem 1.5rem; /* More padding */
+            border-radius: 0.75rem; /* More rounded */
+            margin-bottom: 0.75rem; /* More spacing */
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-weight: 600;
-            color: #2D3748;
-            transition: background-color 0.3s ease;
+            font-weight: 700;
+            color: #2C3E50;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
         .accordion-header:hover {
-            background-color: #CBD5E0;
+            background-color: #DDE7F0; /* Slightly darker on hover */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        .accordion-header span:last-child {
+            font-size: 1.8rem; /* Larger plus/minus */
+            line-height: 1;
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.active span:last-child {
+            transform: rotate(45deg); /* Rotate for 'x' effect */
         }
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease-out;
-            padding: 0 1rem;
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out; /* Smooth transition for padding */
+            padding: 0 1.5rem; /* Initial padding */
         }
         .accordion-content.active {
             max-height: 1000px; /* Large enough to contain content */
-            padding-bottom: 1rem;
+            padding-top: 1rem; /* Add padding when active */
+            padding-bottom: 1.5rem; /* Add padding when active */
         }
-        .hamburger-icon {
-            display: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: #343A40;
+        .accordion-item-card {
+            background-color: #FFFFFF;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease;
+        }
+        .accordion-item-card:hover {
+            transform: translateY(-3px);
+        }
+        .accordion-item-card:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background-color: #FFFFFF;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), 0 4px 10px rgba(0, 0, 0, 0.04);
+            padding: 1.5rem; /* Added padding */
+            width: 100%;
+            max-width: 900px; /* Increased max-width */
+            margin-left: auto;
+            margin-right: auto;
+            height: 450px; /* Slightly taller */
+            max-height: 60vh; /* Responsive height */
         }
         @media (max-width: 767px) {
-            .hamburger-icon {
-                display: block;
+            .chart-container {
+                height: 350px; /* Shorter on mobile */
+                max-height: 50vh;
             }
-            .mobile-nav-links {
-                display: none;
-                flex-direction: column;
-                width: 100%;
-                background-color: #fff;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-                padding: 1rem 0;
-            }
-            .mobile-nav-links.active {
-                display: flex;
-            }
-            .mobile-nav-links a {
-                padding: 0.75rem 1.5rem;
-                text-align: center;
-                color: #6C757D;
-                border-bottom: 1px solid #E2E8F0;
-            }
-            .mobile-nav-links a:last-child {
-                border-bottom: none;
-            }
-            .mobile-nav-links a:hover {
-                background-color: #F8F9FA;
-            }
+        }
+
+        /* Mobile Nav */
+        .hamburger-icon {
+            font-size: 2rem; /* Larger icon */
+            color: #343A40;
+            transition: transform 0.3s ease;
+        }
+        .hamburger-icon.active {
+            transform: rotate(90deg);
+        }
+        .mobile-nav-links {
+            transition: all 0.3s ease-in-out;
+            transform: translateY(-10px); /* Slight animation */
+            opacity: 0;
+        }
+        .mobile-nav-links.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .mobile-nav-links a {
+            font-weight: 500;
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <header class="bg-white shadow-sm sticky top-0 z-50">
+    <header class="bg-white header-shadow sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center relative">
-            <div class="text-2xl font-bold text-gray-800">
+            <div class="text-3xl font-extrabold text-gray-900">
                 Nobsa<span class="text-blue-600">GovTech</span>
             </div>
             <div class="hidden md:flex space-x-8">
-                <a href="#diagnostico" class="text-gray-600 hover:text-blue-600">Diagnóstico</a>
-                <a href="#roadmap" class="text-gray-600 hover:text-blue-600">Hoja de Ruta</a>
-                <a href="#impacto" class="text-gray-600 hover:text-blue-600">Impacto</a>
-                <a href="#propuesta-valor" class="text-gray-600 hover:text-blue-600">Propuesta de Valor</a>
+                <a href="#diagnostico" class="text-gray-600 hover:text-blue-600 font-medium transition duration-200">Diagnóstico</a>
+                <a href="#roadmap" class="text-gray-600 hover:text-blue-600 font-medium transition duration-200">Hoja de Ruta</a>
+                <a href="#impacto" class="text-gray-600 hover:text-blue-600 font-medium transition duration-200">Impacto</a>
+                <a href="#propuesta-valor" class="text-gray-600 hover:text-blue-600 font-medium transition duration-200">Propuesta de Valor</a>
             </div>
             <div class="hamburger-icon md:hidden" id="hamburger-menu">
                 ☰
             </div>
-            <div class="mobile-nav-links md:hidden" id="mobile-nav-links">
-                <a href="#diagnostico">Diagnóstico</a>
-                <a href="#roadmap">Hoja de Ruta</a>
-                <a href="#impacto">Impacto</a>
-                <a href="#propuesta-valor">Propuesta de Valor</a>
+            <div class="mobile-nav-links md:hidden absolute w-full left-0 top-full bg-white shadow-lg py-4" id="mobile-nav-links">
+                <a href="#diagnostico" class="block py-3 px-6 text-center text-gray-700 hover:bg-gray-50 transition duration-200 border-b border-gray-100">Diagnóstico</a>
+                <a href="#roadmap" class="block py-3 px-6 text-center text-gray-700 hover:bg-gray-50 transition duration-200 border-b border-gray-100">Hoja de Ruta</a>
+                <a href="#impacto" class="block py-3 px-6 text-center text-gray-700 hover:bg-gray-50 transition duration-200 border-b border-gray-100">Impacto</a>
+                <a href="#propuesta-valor" class="block py-3 px-6 text-center text-gray-700 hover:bg-gray-50 transition duration-200">Propuesta de Valor</a>
             </div>
         </nav>
     </header>
 
     <main>
-        <section id="hero" class="bg-white py-20 md:py-32">
-            <div class="container mx-auto px-6 text-center">
-                <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+        <section id="hero" class="hero-bg py-24 md:py-40 text-white">
+            <div class="container mx-auto px-6 text-center hero-content">
+                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight">
                     Transformando a Nobsa en un Líder de
-                    <span class="bg-gradient-to-r from-blue-600 to-teal-400 text-transparent bg-clip-text">Innovación Digital</span>
+                    <span class="gradient-text">Innovación Digital</span>
                 </h1>
-                <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">
+                <p class="mt-8 max-w-4xl mx-auto text-xl font-light opacity-90">
                     Una propuesta ejecutiva para modernizar la gestión pública, mejorar los servicios y fomentar la participación ciudadana a través de la tecnología y la inteligencia artificial.
                 </p>
-                <div class="mt-10 flex justify-center">
-                    <a href="#roadmap" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-700 transition duration-300">
+                <div class="mt-12 flex justify-center">
+                    <a href="#roadmap" class="primary-button">
                         Explorar la Hoja de Ruta
                     </a>
                 </div>
@@ -182,24 +271,24 @@
                     Nobsa cuenta con una base funcional, pero existen oportunidades claras para una transformación digital profunda. Este es nuestro punto de partida.
                 </p>
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="card p-6 flex flex-col items-center text-center">
-                        <div class="text-4xl mb-4">🌐</div>
-                        <h3 class="text-xl font-bold mb-2">Presencia Digital</h3>
+                    <div class="card p-8 flex flex-col items-center text-center">
+                        <div class="text-5xl mb-4 text-blue-600">🌐</div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-800">Presencia Digital</h3>
                         <p class="text-gray-600">Sitio web y redes sociales funcionales, pero con baja transaccionalidad e interacción. La mayoría de trámites en línea se concentran en el sector salud.</p>
                     </div>
-                    <div class="card p-6 flex flex-col items-center text-center">
-                        <div class="text-4xl mb-4">⚙️</div>
-                        <h3 class="text-xl font-bold mb-2">Adopción Tecnológica Interna</h3>
-                        <p class="text-gray-600">Existe una Secretaría TIC y presupuesto asignado de <span class="font-bold">$318M</span>, pero se necesita mejorar la capacitación de los funcionarios.</p>
+                    <div class="card p-8 flex flex-col items-center text-center">
+                        <div class="text-5xl mb-4 text-green-600">⚙️</div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-800">Adopción Tecnológica Interna</h3>
+                        <p class="text-gray-600">Existe una Secretaría TIC y presupuesto asignado de <span class="font-bold text-blue-700">$318M</span>, pero se necesita mejorar la capacitación de los funcionarios.</p>
                     </div>
-                    <div class="card p-6 flex flex-col items-center text-center">
-                        <div class="text-4xl mb-4">📶</div>
-                        <h3 class="text-xl font-bold mb-2">Conectividad Ciudadana</h3>
+                    <div class="card p-8 flex flex-col items-center text-center">
+                        <div class="text-5xl mb-4 text-purple-600">📶</div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-800">Conectividad Ciudadana</h3>
                         <p class="text-gray-600">Avances con programas nacionales y oferta privada de fibra óptica. Persiste la brecha digital en algunos segmentos de la población.</p>
                     </div>
-                    <div class="card p-6 flex flex-col items-center text-center">
-                        <div class="text-4xl mb-4">🚀</div>
-                        <h3 class="text-xl font-bold mb-2">Iniciativas Previas</h3>
+                    <div class="card p-8 flex flex-col items-center text-center">
+                        <div class="text-5xl mb-4 text-orange-600">🚀</div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-800">Iniciativas Previas</h3>
                         <p class="text-gray-600">Experiencia acumulada con Puntos Vive Digital y capacitación a docentes. Existe un ecosistema de apoyo nacional y departamental.</p>
                     </div>
                 </div>
@@ -215,19 +304,19 @@
                 
                 <div class="border-b border-gray-200 mb-8 hidden md:block tab-buttons-container">
                     <nav class="-mb-px flex justify-center space-x-4 md:space-x-8" aria-label="Tabs">
-                        <button data-tab="fase1" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm md:text-base tab-active">
+                        <button data-tab="fase1" class="tab-btn whitespace-nowrap tab-active">
                             Fase 1: Corto Plazo (6-12m)
                         </button>
-                        <button data-tab="fase2" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm md:text-base tab-inactive">
+                        <button data-tab="fase2" class="tab-btn whitespace-nowrap tab-inactive">
                             Fase 2: Mediano Plazo (12-24m)
                         </button>
-                        <button data-tab="fase3" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm md:text-base tab-inactive">
+                        <button data-tab="fase3" class="tab-btn whitespace-nowrap tab-inactive">
                             Fase 3: Largo Plazo (24-48m)
                         </button>
                     </nav>
                 </div>
 
-                <div id="tab-content" class="mt-8 hidden md:block">
+                <div id="tab-content" class="mt-8 hidden md:block tab-content-wrapper">
                     <!-- Content for desktop tabs -->
                 </div>
 
@@ -246,7 +335,7 @@
                 <div class="chart-container">
                     <canvas id="impactChart"></canvas>
                 </div>
-                 <p class="text-center text-gray-500 mt-4 text-sm">Los valores representan el impacto acumulado proyectado al finalizar la hoja de ruta.</p>
+                 <p class="text-center text-gray-600 mt-6 text-base">Los valores representan el impacto acumulado proyectado al finalizar la hoja de ruta, mostrando el potencial transformador de la estrategia.</p>
             </div>
         </section>
 
@@ -258,44 +347,44 @@
                 </p>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                     <div class="flex items-start space-x-4">
-                        <div class="text-3xl text-blue-600">✓</div>
+                        <div class="text-4xl text-blue-600">✓</div>
                         <div>
-                            <h3 class="font-bold text-lg">Enfoque Holístico</h3>
+                            <h3 class="font-bold text-xl text-gray-800">Enfoque Holístico</h3>
                             <p class="text-gray-600">Abordaje integral que conecta la eficiencia interna, los servicios al ciudadano y la participación pública.</p>
                         </div>
                     </div>
                     <div class="flex items-start space-x-4">
-                        <div class="text-3xl text-blue-600">✓</div>
+                        <div class="text-4xl text-green-600">✓</div>
                         <div>
-                            <h3 class="font-bold text-lg">Pionerismo en IA</h3>
+                            <h3 class="font-bold text-xl text-gray-800">Pionerismo en IA</h3>
                             <p class="text-gray-600">Adopción temprana de IA avanzada (LangChain, CrewAI) para generar conocimiento y atraer talento.</p>
                         </div>
                     </div>
                     <div class="flex items-start space-x-4">
-                        <div class="text-3xl text-blue-600">✓</div>
+                        <div class="text-4xl text-purple-600">✓</div>
                         <div>
-                            <h3 class="font-bold text-lg">Gobierno Centrado en el Ciudadano</h3>
+                            <h3 class="font-bold text-xl text-gray-800">Gobierno Centrado en el Ciudadano</h3>
                             <p class="text-gray-600">Servicios personalizados y proactivos que mejoran la experiencia y satisfacción del ciudadano.</p>
                         </div>
                     </div>
                     <div class="flex items-start space-x-4">
-                        <div class="text-3xl text-blue-600">✓</div>
+                        <div class="text-4xl text-orange-600">✓</div>
                         <div>
-                            <h3 class="font-bold text-lg">Transparencia Basada en Datos</h3>
+                            <h3 class="font-bold text-xl text-gray-800">Transparencia Basada en Datos</h3>
                             <p class="text-gray-600">Uso de dashboards y datos abiertos para optimizar recursos y fomentar la rendición de cuentas.</p>
                         </div>
                     </div>
                      <div class="flex items-start space-x-4">
-                        <div class="text-3xl text-blue-600">✓</div>
+                        <div class="text-4xl text-red-600">✓</div>
                         <div>
-                            <h3 class="font-bold text-lg">Aprovechamiento del Ecosistema</h3>
+                            <h3 class="font-bold text-xl text-gray-800">Aprovechamiento del Ecosistema</h3>
                             <p class="text-gray-600">Sinergia con iniciativas de MinTIC y la Gobernación para asegurar sostenibilidad y escalabilidad.</p>
                         </div>
                     </div>
                      <div class="flex items-start space-x-4">
-                        <div class="text-3xl text-blue-600">✓</div>
+                        <div class="text-4xl text-teal-600">✓</div>
                         <div>
-                            <h3 class="font-bold text-lg">Fomento a la Innovación Local</h3>
+                            <h3 class="font-bold text-xl text-gray-800">Fomento a la Innovación Local</h3>
                             <p class="text-gray-600">Creación de un ecosistema que impulse el emprendimiento y genere nuevas oportunidades económicas.</p>
                         </div>
                     </div>
@@ -304,10 +393,10 @@
         </section>
     </main>
 
-    <footer class="bg-gray-800 text-white">
-        <div class="container mx-auto px-6 py-8 text-center">
-            <p>&copy; 2025 Propuesta de Transformación Digital para Nobsa, Boyacá.</p>
-            <p class="text-sm text-gray-400 mt-2">Una iniciativa para un gobierno más eficiente, transparente y cercano.</p>
+    <footer class="bg-gray-900 text-white">
+        <div class="container mx-auto px-6 py-10 text-center">
+            <p class="text-lg font-medium">&copy; 2025 Propuesta de Transformación Digital para Nobsa, Boyacá.</p>
+            <p class="text-sm text-gray-400 mt-3">Una iniciativa para un gobierno más eficiente, transparente y cercano, impulsada por la innovación.</p>
         </div>
     </footer>
 
@@ -410,17 +499,19 @@
         const tabButtons = document.querySelectorAll('.tab-btn');
         const hamburgerMenu = document.getElementById('hamburger-menu');
         const mobileNavLinks = document.getElementById('mobile-nav-links');
-        const tabButtonsContainer = document.querySelector('.tab-buttons-container'); // Corrected selector
+        const tabButtonsContainer = document.querySelector('.tab-buttons-container'); 
 
         // Toggle mobile navigation menu
         hamburgerMenu.addEventListener('click', () => {
             mobileNavLinks.classList.toggle('active');
+            hamburgerMenu.classList.toggle('active');
         });
 
         // Close mobile nav when a link is clicked
         mobileNavLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileNavLinks.classList.remove('active');
+                hamburgerMenu.classList.remove('active');
             });
         });
 
@@ -453,22 +544,21 @@
             let content = '';
             Object.keys(tabData).forEach((key, index) => {
                 const data = tabData[key];
-                // Check if the current accordion item should be active based on screen size or initial load
                 const isActive = (window.innerWidth < 768 && index === 0) ? 'active' : ''; 
-                const maxHeight = (window.innerWidth < 768 && index === 0) ? '1000px' : '0'; 
+                const plusMinus = (window.innerWidth < 768 && index === 0) ? '−' : '+';
 
                 content += `
                     <div class="mb-4">
-                        <div class="accordion-header" data-accordion-id="${key}">
+                        <div class="accordion-header ${isActive ? 'active' : ''}" data-accordion-id="${key}">
                             <span>${data.title}</span>
-                            <span>${(window.innerWidth < 768 && index === 0) ? '−' : '+'}</span>
+                            <span>${plusMinus}</span>
                         </div>
-                        <div class="accordion-content ${isActive}" style="max-height: ${maxHeight};">
+                        <div class="accordion-content ${isActive}" style="max-height: ${isActive ? '1000px' : '0'};">
                             <div class="p-4 bg-white rounded-b-lg shadow-sm">
                                 <p class="mb-4 text-gray-700">${data.objective}</p>
                                 <div class="grid grid-cols-1 gap-6">
                                     ${data.items.map(item => `
-                                        <div class="flex items-start space-x-4">
+                                        <div class="accordion-item-card flex items-start space-x-4">
                                             <div class="text-3xl mt-1">${item.icon}</div>
                                             <div>
                                                 <h4 class="font-bold text-lg text-gray-900">${item.title}</h4>
@@ -489,22 +579,28 @@
                 header.addEventListener('click', () => {
                     const content = header.nextElementSibling;
                     const plusMinus = header.querySelector('span:last-child');
+                    const isActive = header.classList.contains('active');
 
-                    if (content.classList.contains('active')) {
-                        content.classList.remove('active');
-                        content.style.maxHeight = '0';
-                        plusMinus.textContent = '+';
-                    } else {
-                        // Close all other accordions
-                        document.querySelectorAll('.accordion-content.active').forEach(openContent => {
-                            openContent.classList.remove('active');
-                            openContent.style.maxHeight = '0';
-                            openContent.previousElementSibling.querySelector('span:last-child').textContent = '+';
-                        });
+                    // Close all other accordions
+                    document.querySelectorAll('.accordion-header.active').forEach(openHeader => {
+                        openHeader.classList.remove('active');
+                        openHeader.nextElementSibling.classList.remove('active');
+                        openHeader.nextElementSibling.style.maxHeight = '0';
+                        openHeader.querySelector('span:last-child').textContent = '+';
+                    });
+
+                    if (!isActive) {
                         // Open current accordion
+                        header.classList.add('active');
                         content.classList.add('active');
                         content.style.maxHeight = content.scrollHeight + 'px'; // Set to actual scroll height
                         plusMinus.textContent = '−';
+                    } else {
+                        // If it was active and clicked again, close it
+                        header.classList.remove('active');
+                        content.classList.remove('active');
+                        content.style.maxHeight = '0';
+                        plusMinus.textContent = '+';
                     }
                 });
             });
@@ -547,7 +643,6 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Initial render based on screen size
             handleResize(); // Call handleResize on initial load
             
             const ctx = document.getElementById('impactChart').getContext('2d');
@@ -558,20 +653,20 @@
                     datasets: [{
                         label: 'Aumento de Satisfacción/Participación (%)',
                         data: [30, 0, 0],
-                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: ['#4A90E2', '#6FCF97', '#FFD700'], /* Modern colors */
+                        borderColor: ['#3A7ADF', '#5CBF80', '#E6C200'],
                         borderWidth: 1
                     }, {
                         label: 'Reducción de Costos / Optimización (%)',
                         data: [0, 25, 0],
-                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: ['#6FCF97', '#4A90E2', '#FFD700'], /* Modern colors */
+                        borderColor: ['#5CBF80', '#3A7ADF', '#E6C200'],
                         borderWidth: 1
                     }, {
                         label: 'Mejora de Eficiencia / Calidad (%)',
                         data: [0, 0, 50],
-                        backgroundColor: 'rgba(255, 159, 64, 0.6)',
-                        borderColor: 'rgba(255, 159, 64, 1)',
+                        backgroundColor: ['#FFD700', '#4A90E2', '#6FCF97'], /* Modern colors */
+                        borderColor: ['#E6C200', '#3A7ADF', '#5CBF80'],
                         borderWidth: 1
                     }]
                 },
@@ -583,7 +678,26 @@
                             beginAtZero: true,
                             title: {
                                 display: true,
-                                text: 'Impacto Proyectado (%)'
+                                text: 'Impacto Proyectado (%)',
+                                color: '#2C3E50',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            },
+                            ticks: {
+                                color: '#607D8B'
+                            },
+                            grid: {
+                                color: 'rgba(0,0,0,0.05)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#2C3E50'
+                            },
+                            grid: {
+                                display: false
                             }
                         }
                     },
@@ -600,14 +714,35 @@
                                     }
                                     return label;
                                 }
-                            }
+                            },
+                            backgroundColor: 'rgba(44, 62, 80, 0.9)', /* Darker tooltip */
+                            titleFont: { size: 14, weight: 'bold' },
+                            bodyFont: { size: 12 },
+                            padding: 10,
+                            cornerRadius: 6
                         },
                         legend: {
-                            position: 'top',
+                            position: 'bottom', /* Move legend to bottom */
+                            labels: {
+                                font: {
+                                    size: 12,
+                                    weight: '500'
+                                },
+                                color: '#2C3E50'
+                            }
                         },
                         title: {
                             display: true,
-                            text: 'Impacto Acumulado por Categoría'
+                            text: 'Impacto Acumulado por Categoría',
+                            color: '#2C3E50',
+                            font: {
+                                size: 18,
+                                weight: 'bold'
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 20
+                            }
                         }
                     }
                 }
