@@ -213,7 +213,7 @@
                     Proponemos una implementación gradual y estratégica en tres fases para asegurar una transición exitosa, maximizando el valor en cada etapa y permitiendo la adaptación continua.
                 </p>
                 
-                <div class="border-b border-gray-200 mb-8 hidden md:block">
+                <div class="border-b border-gray-200 mb-8 hidden md:block tab-buttons-container">
                     <nav class="-mb-px flex justify-center space-x-4 md:space-x-8" aria-label="Tabs">
                         <button data-tab="fase1" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm md:text-base tab-active">
                             Fase 1: Corto Plazo (6-12m)
@@ -410,6 +410,7 @@
         const tabButtons = document.querySelectorAll('.tab-btn');
         const hamburgerMenu = document.getElementById('hamburger-menu');
         const mobileNavLinks = document.getElementById('mobile-nav-links');
+        const tabButtonsContainer = document.querySelector('.tab-buttons-container'); // Corrected selector
 
         // Toggle mobile navigation menu
         hamburgerMenu.addEventListener('click', () => {
@@ -452,14 +453,15 @@
             let content = '';
             Object.keys(tabData).forEach((key, index) => {
                 const data = tabData[key];
-                const isActive = index === 0 ? 'active' : ''; // First one active by default
-                const maxHeight = index === 0 ? '1000px' : '0'; // Initial height for active accordion
+                // Check if the current accordion item should be active based on screen size or initial load
+                const isActive = (window.innerWidth < 768 && index === 0) ? 'active' : ''; 
+                const maxHeight = (window.innerWidth < 768 && index === 0) ? '1000px' : '0'; 
 
                 content += `
                     <div class="mb-4">
                         <div class="accordion-header" data-accordion-id="${key}">
                             <span>${data.title}</span>
-                            <span>${index === 0 ? '−' : '+'}</span>
+                            <span>${(window.innerWidth < 768 && index === 0) ? '−' : '+'}</span>
                         </div>
                         <div class="accordion-content ${isActive}" style="max-height: ${maxHeight};">
                             <div class="p-4 bg-white rounded-b-lg shadow-sm">
@@ -510,16 +512,16 @@
 
         function handleResize() {
             if (window.innerWidth >= 768) { // md breakpoint
-                document.querySelector('.tab-buttons-container').classList.remove('hidden');
-                document.querySelector('.tab-buttons-container').classList.add('block');
+                tabButtonsContainer.classList.remove('hidden');
+                tabButtonsContainer.classList.add('block');
                 tabContentContainer.classList.remove('hidden');
                 tabContentContainer.classList.add('block');
                 accordionContentContainer.classList.remove('block');
                 accordionContentContainer.classList.add('hidden');
                 renderTabContent('fase1'); // Re-render default tab on desktop
             } else {
-                document.querySelector('.tab-buttons-container').classList.remove('block');
-                document.querySelector('.tab-buttons-container').classList.add('hidden');
+                tabButtonsContainer.classList.remove('block');
+                tabButtonsContainer.classList.add('hidden');
                 tabContentContainer.classList.remove('block');
                 tabContentContainer.classList.add('hidden');
                 accordionContentContainer.classList.remove('hidden');
@@ -546,12 +548,8 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             // Initial render based on screen size
-            if (window.innerWidth >= 768) {
-                renderTabContent('fase1');
-            } else {
-                renderAccordionContent();
-            }
-
+            handleResize(); // Call handleResize on initial load
+            
             const ctx = document.getElementById('impactChart').getContext('2d');
             const impactChart = new Chart(ctx, {
                 type: 'bar',
