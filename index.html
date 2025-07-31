@@ -27,38 +27,39 @@
             line-height: 1.6;
         }
         .header-shadow {
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* More prominent header shadow */
         }
         .section-title {
-            font-size: 2.5rem; /* Larger title */
+            font-size: 2.8rem; /* Larger title */
             font-weight: 900; /* Bolder */
             color: #2C3E50;
             text-align: center;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.025em; /* Tighter spacing */
+            margin-bottom: 1.8rem; /* More spacing below */
+            letter-spacing: -0.03em; /* Tighter spacing */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05); /* Subtle text shadow */
         }
         .section-subtitle {
-            font-size: 1.25rem; /* Slightly larger subtitle */
+            font-size: 1.35rem; /* Slightly larger subtitle */
             color: #607D8B; /* Softer gray */
             text-align: center;
             max-width: 900px; /* Wider for better readability */
-            margin: 0 auto 4rem auto; /* More spacing below */
+            margin: 0 auto 4.5rem auto; /* More spacing below */
         }
         .card {
             background-color: #FFFFFF;
-            border-radius: 1rem; /* More rounded corners */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), 0 4px 10px rgba(0, 0, 0, 0.04); /* Deeper shadow */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle border */
+            border-radius: 1.25rem; /* Even more rounded corners */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05); /* Deeper, multi-layered shadow */
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition */
+            border: 1px solid rgba(0, 0, 0, 0.08); /* Slightly more visible subtle border */
         }
         .card:hover {
-            transform: translateY(-8px); /* More pronounced lift */
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12), 0 6px 15px rgba(0, 0, 0, 0.06); /* Even deeper shadow on hover */
+            transform: translateY(-10px); /* More pronounced lift */
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 10px 20px rgba(0, 0, 0, 0.08); /* Even deeper shadow on hover */
         }
         
         /* Hero section specific styles */
         .hero-bg {
-            background: linear-gradient(135deg, #4A90E2 0%, #6FCF97 100%); /* Vibrant gradient */
+            background: linear-gradient(135deg, #2B6CB0 0%, #38A169 100%); /* Deeper, more sophisticated gradient */
             position: relative;
             overflow: hidden;
         }
@@ -69,8 +70,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='M0 60V0h60v60H0zm5-10V10h50v50H5zm10-10V20h40v40H15zm10-10V30h30v30H25zm10-10V40h20v20H35zm10-10V50h10v10H45z'/%3E%3C/g%3E%3C/svg%3E"); /* Subtle geometric pattern */
-            opacity: 0.1;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.08' fill-rule='evenodd'%3E%3Cpath d='M0 60V0h60v60H0zm5-10V10h50v50H5zm10-10V20h40v40H15zm10-10V30h30v30H25zm10-10V40h20v20H35zm10-10V50h10v10H45z'/%3E%3C/g%3E%3C/svg%3E"); /* Subtle geometric pattern with lower opacity */
+            opacity: 0.15; /* Slightly more visible pattern */
             z-index: 0;
         }
         .hero-content {
@@ -78,7 +79,7 @@
             z-index: 1;
         }
         .gradient-text {
-            background-image: linear-gradient(45deg, #0D6EFD, #28A745); /* Blue to Green gradient */
+            background-image: linear-gradient(45deg, #A7D9FF, #C6F6D5); /* Lighter, more ethereal gradient for text */
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -87,50 +88,51 @@
         .primary-button {
             background-color: #0D6EFD;
             color: white;
-            padding: 0.8rem 2.5rem;
+            padding: 1rem 3rem; /* More padding */
             border-radius: 9999px; /* Fully rounded */
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+            font-weight: 700; /* Bolder */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition */
+            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.4); /* More pronounced shadow */
         }
         .primary-button:hover {
             background-color: #0B5ED7;
-            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.4);
-            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(13, 110, 253, 0.5);
+            transform: translateY(-3px); /* More pronounced lift */
         }
 
         /* Tabs (Desktop) */
         .tab-btn {
-            padding: 1rem 1.5rem;
-            border-bottom: 3px solid transparent; /* Thicker border */
+            padding: 1.2rem 1.8rem; /* More padding */
+            border-bottom: 4px solid transparent; /* Thicker border */
             font-weight: 600;
             color: #607D8B;
             transition: all 0.3s ease;
-            border-radius: 0.5rem 0.5rem 0 0; /* Rounded top corners */
+            border-radius: 0.75rem 0.75rem 0 0; /* More rounded top corners */
         }
         .tab-btn:hover {
             color: #0D6EFD;
-            border-color: #A7D9FF; /* Lighter blue on hover */
+            border-color: #89CFF0; /* Lighter blue on hover */
         }
         .tab-active {
             border-color: #0D6EFD;
             color: #0D6EFD;
             background-color: #EBF2F7; /* Subtle background for active tab */
             font-weight: 700;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.05); /* Subtle shadow on active tab */
         }
         .tab-content-wrapper {
             background-color: #FFFFFF;
             border-radius: 1rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            padding: 2.5rem; /* More padding */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); /* Refined shadow */
+            padding: 3rem; /* More padding */
         }
 
         /* Accordion (Mobile) */
         .accordion-header {
             background-color: #EBF2F7; /* Lighter background for header */
-            padding: 1.2rem 1.5rem; /* More padding */
-            border-radius: 0.75rem; /* More rounded */
-            margin-bottom: 0.75rem; /* More spacing */
+            padding: 1.4rem 1.8rem; /* More padding */
+            border-radius: 1rem; /* More rounded */
+            margin-bottom: 0.8rem; /* More spacing */
             cursor: pointer;
             display: flex;
             justify-content: space-between;
@@ -138,14 +140,19 @@
             font-weight: 700;
             color: #2C3E50;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* More refined shadow */
         }
         .accordion-header:hover {
             background-color: #DDE7F0; /* Slightly darker on hover */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+        .accordion-header.active {
+            background-color: #DDE7F0; /* Keep active state background */
+            border-bottom-left-radius: 0; /* Remove bottom radius when open */
+            border-bottom-right-radius: 0;
         }
         .accordion-header span:last-child {
-            font-size: 1.8rem; /* Larger plus/minus */
+            font-size: 2rem; /* Larger plus/minus */
             line-height: 1;
             transition: transform 0.3s ease;
         }
@@ -155,24 +162,30 @@
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out; /* Smooth transition for padding */
-            padding: 0 1.5rem; /* Initial padding */
+            transition: max-height 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), padding 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition for padding */
+            padding: 0 1.8rem; /* Initial padding */
+            background-color: #FFFFFF; /* Match card background */
+            border-bottom-left-radius: 1rem; /* Rounded bottom corners */
+            border-bottom-right-radius: 1rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); /* Shadow for content */
         }
         .accordion-content.active {
-            max-height: 1000px; /* Large enough to contain content */
-            padding-top: 1rem; /* Add padding when active */
-            padding-bottom: 1.5rem; /* Add padding when active */
+            max-height: 1200px; /* Increased max-height to ensure content fits */
+            padding-top: 1.5rem; /* Add more padding when active */
+            padding-bottom: 2rem; /* Add more padding when active */
         }
         .accordion-item-card {
-            background-color: #FFFFFF;
-            border-radius: 0.75rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-            padding: 1.5rem;
-            margin-bottom: 1rem;
+            background-color: #F8FAFC; /* Lighter background for inner cards */
+            border-radius: 0.8rem;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.02); /* Very subtle shadow */
+            padding: 1.8rem; /* More padding */
+            margin-bottom: 1.2rem; /* More spacing */
             transition: transform 0.2s ease;
+            border: 1px solid rgba(0,0,0,0.03); /* Very subtle border */
         }
         .accordion-item-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-4px); /* Slightly more pronounced lift */
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
         }
         .accordion-item-card:last-child {
             margin-bottom: 0;
@@ -181,26 +194,26 @@
         /* Chart Container */
         .chart-container {
             background-color: #FFFFFF;
-            border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), 0 4px 10px rgba(0, 0, 0, 0.04);
-            padding: 1.5rem; /* Added padding */
+            border-radius: 1.25rem; /* More rounded */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05); /* Consistent shadow */
+            padding: 2rem; /* More padding */
             width: 100%;
-            max-width: 900px; /* Increased max-width */
+            max-width: 950px; /* Increased max-width */
             margin-left: auto;
             margin-right: auto;
-            height: 450px; /* Slightly taller */
-            max-height: 60vh; /* Responsive height */
+            height: 500px; /* Slightly taller */
+            max-height: 65vh; /* Responsive height */
         }
         @media (max-width: 767px) {
             .chart-container {
-                height: 350px; /* Shorter on mobile */
-                max-height: 50vh;
+                height: 400px; /* Shorter on mobile */
+                max-height: 55vh;
             }
         }
 
         /* Mobile Nav */
         .hamburger-icon {
-            font-size: 2rem; /* Larger icon */
+            font-size: 2.2rem; /* Even larger icon */
             color: #343A40;
             transition: transform 0.3s ease;
         }
@@ -208,8 +221,8 @@
             transform: rotate(90deg);
         }
         .mobile-nav-links {
-            transition: all 0.3s ease-in-out;
-            transform: translateY(-10px); /* Slight animation */
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother animation */
+            transform: translateY(-20px); /* More pronounced animation */
             opacity: 0;
         }
         .mobile-nav-links.active {
@@ -217,7 +230,7 @@
             opacity: 1;
         }
         .mobile-nav-links a {
-            font-weight: 500;
+            font-weight: 600; /* Bolder links */
         }
     </style>
 </head>
@@ -467,7 +480,7 @@
                 objective: 'Consolidar a Nobsa como un epicentro de innovación GovTech, atrayendo talento y desarrollando capacidades de ciudad inteligente para mejorar la calidad de vida.',
                 items: [
                     { 
-                        icon: '🔓', 
+                        icon: '�', 
                         title: 'Plataforma de Datos Abiertos', 
                         description: 'Publicación de datos públicos (presupuesto, contratos, estadísticas) para fomentar la transparencia y la creación de nuevas soluciones.',
                         tech: 'Open Data'
