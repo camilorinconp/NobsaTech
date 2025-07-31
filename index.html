@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta de Transformación Digital para Nobsa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: The SPA is structured into four logical, scrollable sections for intuitive exploration: 1) A 'Hero' section summarizing the vision. 2) A 'Diagnosis' section using interactive cards to present the current digital state. 3) A core 'Roadmap' section with clickable tabs for each phase (Short, Medium, Long Term), dynamically displaying objectives, technologies, and use cases. This is the main interactive hub. 4) An 'Impact' section with a dynamic bar chart visualizing the projected social, economic, and administrative benefits. This structure transforms the linear report into a user-driven dashboard, allowing stakeholders to grasp the big picture and then drill down into specific phases, making the complex proposal digestible and engaging. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Executive Summary -> Goal: Inform/Inspire -> Viz: Hero section with key stats -> Interaction: None -> Justification: Strong initial impact. -> Library/Method: HTML/Tailwind.
+        - Report Info: Diagnosis Data (Presence, Tech, Connectivity) -> Goal: Organize/Inform -> Viz: Icon-driven cards -> Interaction: Hover effects -> Justification: Quickly conveys current state without overwhelming detail. -> Library/Method: HTML/Tailwind.
+        - Report Info: Phased Implementation Plan -> Goal: Organize/Compare -> Viz: Interactive Tabbed Timeline -> Interaction: Click to reveal phase details -> Justification: Allows users to compare phases and explore details on demand, which is more effective than a long scroll. -> Library/Method: HTML/Tailwind/JS.
+        - Report Info: Impact Indicators (% changes) -> Goal: Compare/Inform -> Viz: Grouped Bar Chart -> Interaction: Tooltips on hover -> Justification: A bar chart is superior to multiple pie charts for comparing different metrics across categories (Social, Economic, Admin). -> Library/Method: Chart.js/Canvas.
+        - Report Info: Value Proposition -> Goal: Inform -> Viz: Multi-column list with icons -> Interaction: None -> Justification: Clear, scannable summary of key benefits. -> Library/Method: HTML/Tailwind.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F9FA;
+            color: #212529;
+        }
+        .tab-active {
+            border-color: #0D6EFD;
+            color: #0D6EFD;
+            font-weight: 600;
+        }
+        .tab-inactive {
+            border-color: transparent;
+            color: #6C757D;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: #343A40;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: #6C757D;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
+        }
+        .card {
+            background-color: #FFFFFF;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-gray-800">
+                Nobsa<span class="text-blue-600">GovTech</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#diagnostico" class="text-gray-600 hover:text-blue-600">Diagnóstico</a>
+                <a href="#roadmap" class="text-gray-600 hover:text-blue-600">Hoja de Ruta</a>
+                <a href="#impacto" class="text-gray-600 hover:text-blue-600">Impacto</a>
+                <a href="#propuesta-valor" class="text-gray-600 hover:text-blue-600">Propuesta de Valor</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="bg-white py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+                    Transformando a Nobsa en un Líder de
+                    <span class="bg-gradient-to-r from-blue-600 to-teal-400 text-transparent bg-clip-text">Innovación Digital</span>
+                </h1>
+                <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">
+                    Una propuesta ejecutiva para modernizar la gestión pública, mejorar los servicios y fomentar la participación ciudadana a través de la tecnología y la inteligencia artificial.
+                </p>
+                <div class="mt-10 flex justify-center">
+                    <a href="#roadmap" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-700 transition duration-300">
+                        Explorar la Hoja de Ruta
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="diagnostico" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Diagnóstico Actual</h2>
+                <p class="section-subtitle">
+                    Nobsa cuenta con una base funcional, pero existen oportunidades claras para una transformación digital profunda. Este es nuestro punto de partida.
+                </p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="card p-6 flex flex-col items-center text-center">
+                        <div class="text-4xl mb-4">🌐</div>
+                        <h3 class="text-xl font-bold mb-2">Presencia Digital</h3>
+                        <p class="text-gray-600">Sitio web y redes sociales funcionales, pero con baja transaccionalidad e interacción. La mayoría de trámites en línea se concentran en el sector salud.</p>
+                    </div>
+                    <div class="card p-6 flex flex-col items-center text-center">
+                        <div class="text-4xl mb-4">⚙️</div>
+                        <h3 class="text-xl font-bold mb-2">Adopción Tecnológica Interna</h3>
+                        <p class="text-gray-600">Existe una Secretaría TIC y presupuesto asignado de <span class="font-bold">$318M</span>, pero se necesita mejorar la capacitación de los funcionarios.</p>
+                    </div>
+                    <div class="card p-6 flex flex-col items-center text-center">
+                        <div class="text-4xl mb-4">📶</div>
+                        <h3 class="text-xl font-bold mb-2">Conectividad Ciudadana</h3>
+                        <p class="text-gray-600">Avances con programas nacionales y oferta privada de fibra óptica. Persiste la brecha digital en algunos segmentos de la población.</p>
+                    </div>
+                    <div class="card p-6 flex flex-col items-center text-center">
+                        <div class="text-4xl mb-4">🚀</div>
+                        <h3 class="text-xl font-bold mb-2">Iniciativas Previas</h3>
+                        <p class="text-gray-600">Experiencia acumulada con Puntos Vive Digital y capacitación a docentes. Existe un ecosistema de apoyo nacional y departamental.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Hoja de Ruta por Fases</h2>
+                <p class="section-subtitle">
+                    Proponemos una implementación gradual y estratégica en tres fases para asegurar una transición exitosa, maximizando el valor en cada etapa y permitiendo la adaptación continua.
+                </p>
+                
+                <div class="border-b border-gray-200 mb-8">
+                    <nav class="-mb-px flex justify-center space-x-4 md:space-x-8" aria-label="Tabs">
+                        <button data-tab="fase1" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm md:text-base tab-active">
+                            Fase 1: Corto Plazo (6-12m)
+                        </button>
+                        <button data-tab="fase2" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm md:text-base tab-inactive">
+                            Fase 2: Mediano Plazo (12-24m)
+                        </button>
+                        <button data-tab="fase3" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm md:text-base tab-inactive">
+                            Fase 3: Largo Plazo (24-48m)
+                        </button>
+                    </nav>
+                </div>
+
+                <div id="tab-content" class="mt-8">
+                </div>
+            </div>
+        </section>
+
+        <section id="impacto" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Indicadores de Impacto Esperados</h2>
+                <p class="section-subtitle">
+                    La implementación de esta hoja de ruta generará beneficios medibles en los ámbitos social, económico y administrativo, mejorando la calidad de vida y la eficiencia de la gestión.
+                </p>
+                <div class="chart-container">
+                    <canvas id="impactChart"></canvas>
+                </div>
+                 <p class="text-center text-gray-500 mt-4 text-sm">Los valores representan el impacto acumulado proyectado al finalizar la hoja de ruta.</p>
+            </div>
+        </section>
+
+        <section id="propuesta-valor" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Propuesta de Valor Diferenciadora</h2>
+                <p class="section-subtitle">
+                    Nobsa no solo se modernizará, sino que se posicionará como un modelo a seguir en gobierno digital para Boyacá y Colombia.
+                </p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div class="flex items-start space-x-4">
+                        <div class="text-3xl text-blue-600">✓</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Enfoque Holístico</h3>
+                            <p class="text-gray-600">Abordaje integral que conecta la eficiencia interna, los servicios al ciudadano y la participación pública.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <div class="text-3xl text-blue-600">✓</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Pionerismo en IA</h3>
+                            <p class="text-gray-600">Adopción temprana de IA avanzada (LangChain, CrewAI) para generar conocimiento y atraer talento.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <div class="text-3xl text-blue-600">✓</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Gobierno Centrado en el Ciudadano</h3>
+                            <p class="text-gray-600">Servicios personalizados y proactivos que mejoran la experiencia y satisfacción del ciudadano.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <div class="text-3xl text-blue-600">✓</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Transparencia Basada en Datos</h3>
+                            <p class="text-gray-600">Uso de dashboards y datos abiertos para optimizar recursos y fomentar la rendición de cuentas.</p>
+                        </div>
+                    </div>
+                     <div class="flex items-start space-x-4">
+                        <div class="text-3xl text-blue-600">✓</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Aprovechamiento del Ecosistema</h3>
+                            <p class="text-gray-600">Sinergia con iniciativas de MinTIC y la Gobernación para asegurar sostenibilidad y escalabilidad.</p>
+                        </div>
+                    </div>
+                     <div class="flex items-start space-x-4">
+                        <div class="text-3xl text-blue-600">✓</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Fomento a la Innovación Local</h3>
+                            <p class="text-gray-600">Creación de un ecosistema que impulse el emprendimiento y genere nuevas oportunidades económicas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p>&copy; 2025 Propuesta de Transformación Digital para Nobsa, Boyacá.</p>
+            <p class="text-sm text-gray-400 mt-2">Una iniciativa para un gobierno más eficiente, transparente y cercano.</p>
+        </div>
+    </footer>
+
+    <script>
+        const tabData = {
+            fase1: {
+                title: 'Fase 1: Cimientos Digitales y Optimización de Servicios',
+                objective: 'Fortalecer la base digital, mejorar la accesibilidad a la información y optimizar la interacción inicial con la ciudadanía, sentando las bases para futuras implementaciones de IA.',
+                items: [
+                    { 
+                        icon: '🌐', 
+                        title: 'Mejora de Plataformas Web', 
+                        description: 'Rediseño del sitio web oficial para ser más intuitivo, móvil y centrado en el ciudadano, integrado con el Portal Único del Estado.',
+                        tech: 'HTML5, CSS3, JS'
+                    },
+                    { 
+                        icon: '🗂️', 
+                        title: 'Gestión Documental Electrónica (SGDE)', 
+                        description: 'Digitalización y centralización de archivos para mejorar la eficiencia, trazabilidad y seguridad de la información.',
+                        tech: 'SGDE'
+                    },
+                    { 
+                        icon: '🤖', 
+                        title: 'Chatbot de Atención Básica', 
+                        description: 'Agente conversacional para responder preguntas frecuentes sobre servicios, horarios y trámites, disponible 24/7.',
+                        tech: 'LangChain'
+                    },
+                    { 
+                        icon: '📝', 
+                        title: 'PQRS en Línea', 
+                        description: 'Implementación de un portal interactivo para radicar y seguir en tiempo real el estado de Peticiones, Quejas, Reclamos y Sugerencias.',
+                        tech: 'Plataforma Web'
+                    }
+                ]
+            },
+            fase2: {
+                title: 'Fase 2: Inteligencia Operacional y Participación Ciudadana',
+                objective: 'Automatizar procesos internos clave, mejorar la toma de decisiones estratégicas con datos y potenciar la participación ciudadana a través de plataformas inteligentes.',
+                items: [
+                    { 
+                        icon: '🔄', 
+                        title: 'Automatización de Flujos de Trabajo', 
+                        description: 'Agentes de IA para automatizar tareas repetitivas como clasificación de correos, extracción de datos y pre-procesamiento de solicitudes.',
+                        tech: 'LangGraph, CrewAI'
+                    },
+                    { 
+                        icon: '📊', 
+                        title: 'Dashboards de Decisión con IA', 
+                        description: 'Paneles de control interactivos que integran datos municipales para identificar tendencias, anticipar problemas y ofrecer recomendaciones.',
+                        tech: 'Business Intelligence, IA'
+                    },
+                    { 
+                        icon: '🗳️', 
+                        title: 'Plataforma de Participación Inteligente', 
+                        description: 'Espacio digital para proponer ideas, votar en iniciativas y recibir información personalizada, con IA para analizar y resumir propuestas.',
+                        tech: 'LangChain'
+                    },
+                    { 
+                        icon: '🤝', 
+                        title: 'Automatización de Contratación Menor', 
+                        description: 'Flujo de trabajo automatizado para reducir tiempos y errores en procesos de compras y contratación de menor cuantía.',
+                        tech: 'LangGraph'
+                    }
+                ]
+            },
+            fase3: {
+                title: 'Fase 3: Ecosistema GovTech y Ciudad Inteligente',
+                objective: 'Consolidar a Nobsa como un epicentro de innovación GovTech, atrayendo talento y desarrollando capacidades de ciudad inteligente para mejorar la calidad de vida.',
+                items: [
+                    { 
+                        icon: '🔓', 
+                        title: 'Plataforma de Datos Abiertos', 
+                        description: 'Publicación de datos públicos (presupuesto, contratos, estadísticas) para fomentar la transparencia y la creación de nuevas soluciones.',
+                        tech: 'Open Data'
+                    },
+                    { 
+                        icon: '📡', 
+                        title: 'Pilotos de IoT y Blockchain', 
+                        description: 'Monitoreo inteligente de infraestructura (calidad del aire, gestión de residuos) y exploración de blockchain para registros públicos seguros.',
+                        tech: 'IoT, Blockchain'
+                    },
+                    { 
+                        icon: '🧠', 
+                        title: 'IA Generativa y Analítica Predictiva', 
+                        description: 'Uso de IA para simular el impacto de políticas públicas, anticipar necesidades ciudadanas y optimizar la planificación urbana.',
+                        tech: 'IA Generativa'
+                    },
+                    { 
+                        icon: '💡', 
+                        title: 'Laboratorio de Innovación Pública', 
+                        description: 'Organización de hackatones y eventos para co-crear soluciones a desafíos municipales junto a la comunidad, universidades y startups.',
+                        tech: 'Innovación Abierta'
+                    }
+                ]
+            }
+        };
+
+        const tabContentContainer = document.getElementById('tab-content');
+        const tabButtons = document.querySelectorAll('.tab-btn');
+
+        function renderTabContent(tabKey) {
+            const data = tabData[tabKey];
+            let content = `
+                <div class="text-center mb-12 animate-fade-in">
+                    <h3 class="text-2xl font-bold text-gray-800">${data.title}</h3>
+                    <p class="mt-2 max-w-3xl mx-auto text-gray-600">${data.objective}</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    ${data.items.map(item => `
+                        <div class="card p-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="text-3xl mt-1">${item.icon}</div>
+                                <div>
+                                    <h4 class="font-bold text-lg text-gray-900">${item.title}</h4>
+                                    <p class="text-gray-600 mt-1">${item.description}</p>
+                                    <div class="mt-3 inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">${item.tech}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            tabContentContainer.innerHTML = content;
+        }
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.dataset.tab;
+                
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('tab-active');
+                    btn.classList.add('tab-inactive');
+                });
+                
+                button.classList.add('tab-active');
+                button.classList.remove('tab-inactive');
+                
+                renderTabContent(tabId);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTabContent('fase1');
+
+            const ctx = document.getElementById('impactChart').getContext('2d');
+            const impactChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Social', 'Económico', 'Administrativo'],
+                    datasets: [{
+                        label: 'Aumento de Satisfacción/Participación (%)',
+                        data: [30, 0, 0],
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Reducción de Costos / Optimización (%)',
+                        data: [0, 25, 0],
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Mejora de Eficiencia / Calidad (%)',
+                        data: [0, 0, 50],
+                        backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Impacto Proyectado (%)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null && context.parsed.y > 0) {
+                                        label += context.parsed.y + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Impacto Acumulado por Categoría'
+                        }
+                    }
+                }
+            });
+
+            const navLinks = document.querySelectorAll('nav a[href^="#"]');
+            navLinks.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
