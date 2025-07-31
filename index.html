@@ -10,11 +10,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Calm Harmony -->
-    <!-- Application Structure Plan: The SPA is structured into four logical, scrollable sections for intuitive exploration: 1) A 'Hero' section summarizing the vision. 2) A 'Diagnosis' section using interactive cards to present the current digital state. 3) A core 'Roadmap' section with clickable tabs for each phase (Short, Medium, Long Term), dynamically displaying objectives, technologies, and use cases. This is the main interactive hub. 4) An 'Impact' section with a dynamic bar chart visualizing the projected social, economic, and administrative benefits. This structure transforms the linear report into a user-driven dashboard, allowing stakeholders to grasp the big picture and then drill down into specific phases, making the complex proposal digestible and engaging. -->
+    <!-- Application Structure Plan: The SPA is structured into four logical, scrollable sections for intuitive exploration: 1) A 'Hero' section summarizing the vision. 2) A 'Diagnosis' section using interactive cards to present the current digital state. 3) A core 'Roadmap' section with clickable tabs for each phase (Short, Medium, Long Term) on desktop, transforming into an accordion on mobile, dynamically displaying objectives, technologies, and use cases. This is the main interactive hub. 4) An 'Impact' section with a dynamic bar chart visualizing the projected social, economic, and administrative benefits. This structure transforms the linear report into a user-driven dashboard, allowing stakeholders to grasp the big picture and then drill down into specific phases, making the complex proposal digestible and engaging. -->
     <!-- Visualization & Content Choices: 
         - Report Info: Executive Summary -> Goal: Inform/Inspire -> Viz: Hero section with key stats -> Interaction: None -> Justification: Strong initial impact. -> Library/Method: HTML/Tailwind.
         - Report Info: Diagnosis Data (Presence, Tech, Connectivity) -> Goal: Organize/Inform -> Viz: Icon-driven cards -> Interaction: Hover effects -> Justification: Quickly conveys current state without overwhelming detail. -> Library/Method: HTML/Tailwind.
-        - Report Info: Phased Implementation Plan -> Goal: Organize/Compare -> Viz: Interactive Tabbed Timeline -> Interaction: Click to reveal phase details -> Justification: Allows users to compare phases and explore details on demand, which is more effective than a long scroll. -> Library/Method: HTML/Tailwind/JS.
+        - Report Info: Phased Implementation Plan -> Goal: Organize/Compare -> Viz: Interactive Tabbed Timeline (desktop) / Accordion (mobile) -> Interaction: Click to reveal phase details -> Justification: Tabs are efficient for desktop, while an accordion is superior for mobile to prevent overflow and provide a clear vertical flow. -> Library/Method: HTML/Tailwind/JS.
         - Report Info: Impact Indicators (% changes) -> Goal: Compare/Inform -> Viz: Grouped Bar Chart -> Interaction: Tooltips on hover -> Justification: A bar chart is superior to multiple pie charts for comparing different metrics across categories (Social, Economic, Admin). -> Library/Method: Chart.js/Canvas.
         - Report Info: Value Proposition -> Goal: Inform -> Viz: Multi-column list with icons -> Interaction: None -> Justification: Clear, scannable summary of key benefits. -> Library/Method: HTML/Tailwind.
     -->
@@ -67,12 +67,75 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
         }
+        .accordion-header {
+            background-color: #E2E8F0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #2D3748;
+            transition: background-color 0.3s ease;
+        }
+        .accordion-header:hover {
+            background-color: #CBD5E0;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            padding: 0 1rem;
+        }
+        .accordion-content.active {
+            max-height: 1000px; /* Large enough to contain content */
+            padding-bottom: 1rem;
+        }
+        .hamburger-icon {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #343A40;
+        }
+        @media (max-width: 767px) {
+            .hamburger-icon {
+                display: block;
+            }
+            .mobile-nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background-color: #fff;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+                padding: 1rem 0;
+            }
+            .mobile-nav-links.active {
+                display: flex;
+            }
+            .mobile-nav-links a {
+                padding: 0.75rem 1.5rem;
+                text-align: center;
+                color: #6C757D;
+                border-bottom: 1px solid #E2E8F0;
+            }
+            .mobile-nav-links a:last-child {
+                border-bottom: none;
+            }
+            .mobile-nav-links a:hover {
+                background-color: #F8F9FA;
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
 
     <header class="bg-white shadow-sm sticky top-0 z-50">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center relative">
             <div class="text-2xl font-bold text-gray-800">
                 Nobsa<span class="text-blue-600">GovTech</span>
             </div>
@@ -81,6 +144,15 @@
                 <a href="#roadmap" class="text-gray-600 hover:text-blue-600">Hoja de Ruta</a>
                 <a href="#impacto" class="text-gray-600 hover:text-blue-600">Impacto</a>
                 <a href="#propuesta-valor" class="text-gray-600 hover:text-blue-600">Propuesta de Valor</a>
+            </div>
+            <div class="hamburger-icon md:hidden" id="hamburger-menu">
+                ☰
+            </div>
+            <div class="mobile-nav-links md:hidden" id="mobile-nav-links">
+                <a href="#diagnostico">Diagnóstico</a>
+                <a href="#roadmap">Hoja de Ruta</a>
+                <a href="#impacto">Impacto</a>
+                <a href="#propuesta-valor">Propuesta de Valor</a>
             </div>
         </nav>
     </header>
@@ -141,7 +213,7 @@
                     Proponemos una implementación gradual y estratégica en tres fases para asegurar una transición exitosa, maximizando el valor en cada etapa y permitiendo la adaptación continua.
                 </p>
                 
-                <div class="border-b border-gray-200 mb-8">
+                <div class="border-b border-gray-200 mb-8 hidden md:block">
                     <nav class="-mb-px flex justify-center space-x-4 md:space-x-8" aria-label="Tabs">
                         <button data-tab="fase1" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm md:text-base tab-active">
                             Fase 1: Corto Plazo (6-12m)
@@ -155,7 +227,12 @@
                     </nav>
                 </div>
 
-                <div id="tab-content" class="mt-8">
+                <div id="tab-content" class="mt-8 hidden md:block">
+                    <!-- Content for desktop tabs -->
+                </div>
+
+                <div id="accordion-content" class="mt-8 block md:hidden">
+                    <!-- Content for mobile accordion -->
                 </div>
             </div>
         </section>
@@ -329,7 +406,22 @@
         };
 
         const tabContentContainer = document.getElementById('tab-content');
+        const accordionContentContainer = document.getElementById('accordion-content');
         const tabButtons = document.querySelectorAll('.tab-btn');
+        const hamburgerMenu = document.getElementById('hamburger-menu');
+        const mobileNavLinks = document.getElementById('mobile-nav-links');
+
+        // Toggle mobile navigation menu
+        hamburgerMenu.addEventListener('click', () => {
+            mobileNavLinks.classList.toggle('active');
+        });
+
+        // Close mobile nav when a link is clicked
+        mobileNavLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNavLinks.classList.remove('active');
+            });
+        });
 
         function renderTabContent(tabKey) {
             const data = tabData[tabKey];
@@ -356,6 +448,86 @@
             tabContentContainer.innerHTML = content;
         }
 
+        function renderAccordionContent() {
+            let content = '';
+            Object.keys(tabData).forEach((key, index) => {
+                const data = tabData[key];
+                const isActive = index === 0 ? 'active' : ''; // First one active by default
+                const maxHeight = index === 0 ? '1000px' : '0'; // Initial height for active accordion
+
+                content += `
+                    <div class="mb-4">
+                        <div class="accordion-header" data-accordion-id="${key}">
+                            <span>${data.title}</span>
+                            <span>${index === 0 ? '−' : '+'}</span>
+                        </div>
+                        <div class="accordion-content ${isActive}" style="max-height: ${maxHeight};">
+                            <div class="p-4 bg-white rounded-b-lg shadow-sm">
+                                <p class="mb-4 text-gray-700">${data.objective}</p>
+                                <div class="grid grid-cols-1 gap-6">
+                                    ${data.items.map(item => `
+                                        <div class="flex items-start space-x-4">
+                                            <div class="text-3xl mt-1">${item.icon}</div>
+                                            <div>
+                                                <h4 class="font-bold text-lg text-gray-900">${item.title}</h4>
+                                                <p class="text-gray-600 mt-1">${item.description}</p>
+                                                <div class="mt-3 inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">${item.tech}</div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            accordionContentContainer.innerHTML = content;
+
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const plusMinus = header.querySelector('span:last-child');
+
+                    if (content.classList.contains('active')) {
+                        content.classList.remove('active');
+                        content.style.maxHeight = '0';
+                        plusMinus.textContent = '+';
+                    } else {
+                        // Close all other accordions
+                        document.querySelectorAll('.accordion-content.active').forEach(openContent => {
+                            openContent.classList.remove('active');
+                            openContent.style.maxHeight = '0';
+                            openContent.previousElementSibling.querySelector('span:last-child').textContent = '+';
+                        });
+                        // Open current accordion
+                        content.classList.add('active');
+                        content.style.maxHeight = content.scrollHeight + 'px'; // Set to actual scroll height
+                        plusMinus.textContent = '−';
+                    }
+                });
+            });
+        }
+
+        function handleResize() {
+            if (window.innerWidth >= 768) { // md breakpoint
+                document.querySelector('.tab-buttons-container').classList.remove('hidden');
+                document.querySelector('.tab-buttons-container').classList.add('block');
+                tabContentContainer.classList.remove('hidden');
+                tabContentContainer.classList.add('block');
+                accordionContentContainer.classList.remove('block');
+                accordionContentContainer.classList.add('hidden');
+                renderTabContent('fase1'); // Re-render default tab on desktop
+            } else {
+                document.querySelector('.tab-buttons-container').classList.remove('block');
+                document.querySelector('.tab-buttons-container').classList.add('hidden');
+                tabContentContainer.classList.remove('block');
+                tabContentContainer.classList.add('hidden');
+                accordionContentContainer.classList.remove('hidden');
+                accordionContentContainer.classList.add('block');
+                renderAccordionContent();
+            }
+        }
+
         tabButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const tabId = button.dataset.tab;
@@ -373,7 +545,12 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderTabContent('fase1');
+            // Initial render based on screen size
+            if (window.innerWidth >= 768) {
+                renderTabContent('fase1');
+            } else {
+                renderAccordionContent();
+            }
 
             const ctx = document.getElementById('impactChart').getContext('2d');
             const impactChart = new Chart(ctx, {
@@ -448,6 +625,9 @@
                 });
             });
         });
+
+        // Add event listener for window resize
+        window.addEventListener('resize', handleResize);
     </script>
 </body>
 </html>
